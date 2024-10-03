@@ -585,7 +585,7 @@ int main()
         int num = 0;
         cout << "Number of instances in correct_instances: " << correct_instances.size() << endl;
 
-        while (num < 1000)
+        while (num < 200000)
         {
             // 生成矩阵和结果向量
             auto [matrix, results_bits] = generateMatrixFromInstances(all_instances, t_indices, 256);
