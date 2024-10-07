@@ -42,13 +42,13 @@ int main()
         ifstream file("filtered_output.txt");
         if (!file.is_open())
         {
-            cerr << "无法打开文件 filtered_output.txt" << endl;
+            cerr << "can not open filtered_output.txt" << endl;
             return 1;
         }
 
         string line;
         getline(file, line);
-        cout << "读取到的 t 位索引: " << line << endl;
+        cout << "t_indices: " << line << endl;
 
         while (getline(file, line))
         {
@@ -121,7 +121,7 @@ int main()
                 if (guess_key == key_bitstring)
                 {
                     cout << "The recovered key matches the original key." << endl;
-                    cout << "尝试了 " << num << " 次" << endl;
+                    cout << "tired " << num << " times" << endl;
 
                     clock_t end_time = clock();
                     double elapsed_time = double(end_time - start_time) / CLOCKS_PER_SEC;
@@ -134,13 +134,13 @@ int main()
         }
 
         num_1++;
-        cout << "尝试了 " << num_1 << " 个group" << endl;
+        cout << "tried " << num_1 << " 个group" << endl;
     }
 
     clock_t end_time = clock();
     double elapsed_time = double(end_time - start_time) / CLOCKS_PER_SEC;
     cout << "Elapsed time: " << elapsed_time << " seconds" << endl;
-    cout << "失败" << endl;
+    cout << "failed" << endl;
 
     return 0;
 }

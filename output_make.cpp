@@ -42,7 +42,7 @@ void createDataDirectory(const string &directory) {
 #else
         mkdir(directory.c_str(), 0777);  // Linux下创建目录
 #endif
-        std::cout << "创建了目录: " << directory << std::endl;
+        std::cout << "create: " << directory << std::endl;
     }
 }
 
@@ -78,7 +78,7 @@ int main() {
     filename << directory << "/output_" << file_index << ".bin";  // 添加 .bin 后缀
     ofstream outFile(filename.str(), ios::binary);
     if (!outFile.is_open()) {
-        cerr << "无法打开文件用于写入！" << endl;
+        cerr << "open failed!" << endl;
         return 1;
     }
 
@@ -92,7 +92,7 @@ int main() {
             filename << directory << "/output_" << file_index << ".bin";  // 添加 .bin 后缀
             outFile.open(filename.str(), ios::binary);
             if (!outFile.is_open()) {
-                cerr << "无法打开文件用于写入！" << endl;
+                cerr << "open failed!" << endl;
                 return 1;
             }
         }
@@ -126,14 +126,14 @@ int main() {
 
         // 可选：添加进度显示，每生成 100 万个实例显示一次进度
         if (i % 1000000 == 0) {
-            cout << "已生成 " << i << " 个实例..." << endl;
+            cout << "created " << i << " outputs" << endl;
         }
     }
 
     // 关闭文件
     outFile.close();
 
-    cout << "已生成 " << num_instances << " 个实例" << endl;
+    cout << "created " << num_instances << " outputs" << endl;
     clock_t end_time = clock();
     double elapsed_time = double(end_time - start_time) / CLOCKS_PER_SEC;
     cout << "Elapsed time: " << elapsed_time << " seconds" << endl;
