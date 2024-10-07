@@ -15,20 +15,16 @@
 #include <unistd.h>
 #endif
 
-#include "prng.cpp" // 需要包含之前定义的 PRNG 类
+#include "PRNG.h"  // 引入头文件
 
 using namespace std;
 
 // 新的写入函数：将 bitset<256> 按字节写入文件
-void writeBitsetToFile(ofstream &outFile, const bitset<256> &bits)
-{
-    for (size_t i = 0; i < 256; i += 8)
-    {
+void writeBitsetToFile(ofstream &outFile, const bitset<256> &bits) {
+    for (size_t i = 0; i < 256; i += 8) {
         uint8_t byte = 0;
-        for (int bit = 0; bit < 8; ++bit)
-        {
-            if (bits[i + bit])
-            {
+        for (int bit = 0; bit < 8; ++bit) {
+            if (bits[i + bit]) {
                 byte |= (1 << bit); // 设置对应的位
             }
         }
@@ -50,11 +46,12 @@ void createDataDirectory(const string &directory) {
     }
 }
 
-int main()
-{
+int main() {
     // 初始化密钥
     vector<uint8_t> key = {
-        0x8b, 0x0b, 0xac, 0x2a, 0xcc, 0x71, 0x7b, 0xb4, 0x66, 0xea, 0xab, 0xed, 0x78, 0xe2, 0xfb, 0xdb, 0x3a, 0xd9, 0x89, 0x60, 0xde, 0xbd, 0xc5, 0x53, 0x2b, 0x67, 0xec, 0x5a, 0xa6, 0x65, 0x54, 0x6f};
+        0x8b, 0x0b, 0xac, 0x2a, 0xcc, 0x71, 0x7b, 0xb4, 0x66, 0xea, 0xab, 0xed, 0x78, 0xe2, 0xfb,
+        0xdb, 0x3a, 0xd9, 0x89, 0x60, 0xde, 0xbd, 0xc5, 0x53, 0x2b, 0x67, 0xec, 0x5a, 0xa6, 0x65, 0x54, 0x6f
+    };
 
     // 设置参数
     int N = 256;                       // N 范围
@@ -80,25 +77,21 @@ int main()
     stringstream filename;
     filename << directory << "/output_" << file_index << ".bin";  // 添加 .bin 后缀
     ofstream outFile(filename.str(), ios::binary);
-    if (!outFile.is_open())
-    {
+    if (!outFile.is_open()) {
         cerr << "无法打开文件用于写入！" << endl;
         return 1;
     }
 
     // 生成实例并写入文件
-    for (long long i = 0; i < num_instances; ++i)
-    {
-        if (i > 0 && i % instances_per_file == 0)
-        {
+    for (long long i = 0; i < num_instances; ++i) {
+        if (i > 0 && i % instances_per_file == 0) {
             // 关闭当前文件，打开下一个文件
             outFile.close();
             file_index++;
             filename.str("");  // 清空文件名
             filename << directory << "/output_" << file_index << ".bin";  // 添加 .bin 后缀
             outFile.open(filename.str(), ios::binary);
-            if (!outFile.is_open())
-            {
+            if (!outFile.is_open()) {
                 cerr << "无法打开文件用于写入！" << endl;
                 return 1;
             }
@@ -112,14 +105,12 @@ int main()
         bitset<256> maj_vector;
 
         // 将前 a 个索引设置为 XOR 的 1 位
-        for (int j = 0; j < a; ++j)
-        {
+        for (int j = 0; j < a; ++j) {
             xor_vector.set(permuted_indices[j], 1); // 将指定索引设置为1
         }
 
         // 将接下来 b 个索引设置为 MAJ 的 1 位
-        for (int j = a; j < a + b; ++j)
-        {
+        for (int j = a; j < a + b; ++j) {
             maj_vector.set(permuted_indices[j], 1); // 将指定索引设置为1
         }
 
@@ -134,8 +125,7 @@ int main()
         writeBitsetToFile(outFile, maj_vector);
 
         // 可选：添加进度显示，每生成 100 万个实例显示一次进度
-        if (i % 1000000 == 0)
-        {
+        if (i % 1000000 == 0) {
             cout << "已生成 " << i << " 个实例..." << endl;
         }
     }
