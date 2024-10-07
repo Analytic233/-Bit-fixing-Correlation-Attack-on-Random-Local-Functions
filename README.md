@@ -1,4 +1,4 @@
-Thi# Bit-fixing Correlation Attack on Random Local Functions
+# Bit-fixing Correlation Attack on Random Local Functions
 
 This is a simple implementation of the Bit-fixing Correlation Attack on Random Local Functions based on C++.
 
@@ -13,9 +13,13 @@ These features will be added in the future.
 The key used in this implementation is derived from hashing the value **"EUROCRYPTO2025"** using the standard **SHA-256** function.
 
 ## Usage Instructions
-1. **Generate Outputs**:
-   Use `output.cpp` to generate a large number of outputs for the attack.
+To run the program, you need to generate outputs first and then perform the attack. Here are the commands to do both steps in sequence:
 
-   ```sh
-   g++ output.cpp -o output_generator
-   ./output_generator
+```sh
+# Step 1: Generate Outputs
+g++ -std=c++17 prng.cpp output_make.cpp -o output_generator
+./output_generator
+
+# Step 2: Perform Attack
+g++ -std=c++17 attack.cpp prng.cpp verify.cpp -o attack_program
+./attack_program
